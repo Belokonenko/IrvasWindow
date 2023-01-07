@@ -1,6 +1,6 @@
 import checkNumIputs from "./checkNumInput";
 
-const forms = () => {
+const forms = (state) => {
     const form = document.querySelectorAll('form');
     const inputs = document.querySelectorAll('input');
 
@@ -20,7 +20,6 @@ const forms = () => {
 
     const postData = async (url, data) => { // в этой функци есть асинхронные операции
 
-        console.log('test in postData ');
         document.querySelector('.status').textContent =  message.loading;
 
         let res = await fetch(url ,{ //ждет выполнение fetch
@@ -42,9 +41,14 @@ const forms = () => {
 
             const formData = new FormData(item);
 
+            if (item.getAttribute('data-calc') === "end") {
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
+            }
+
             postData('assets/server.php', formData)
                 .then(res => {
-                    console.log('test postData');
                     console.log(res);
                     statusMessage.textContent = message.success;
                 })
