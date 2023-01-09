@@ -8,6 +8,8 @@ const modals = () => {
         const modal = document.querySelector(modalSelector);
         const close = document.querySelector(closeSelector);
         const windows = document.querySelectorAll('[data-modal]');
+        const scrol = calcScrol();
+        console.log(scrol);
         
         
         trigger.forEach((item) => {
@@ -22,6 +24,9 @@ const modals = () => {
                 
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
+                document.body.style.marginRight = `${scrol}px`;
+                console.log(scrol);
+
             })
         });
 
@@ -32,6 +37,7 @@ const modals = () => {
             
             modal.style.display = 'none';
             document.body.style.overflow = '';
+                document.body.style.marginRight = '0px';
         });
 
         modal.addEventListener('click', (e) => {
@@ -42,9 +48,27 @@ const modals = () => {
                 
                 modal.style.display = 'none';
                 document.body.style.overflow = '';
+                document.body.style.marginRight = '0px';
             }
         });
     };
+
+    function calcScrol() {
+        let div = document.createElement('div');
+
+        div.style.width = '50px';
+        div.style.height = '50px';
+        div.style.overflowY = 'scroll';
+        div.style.visibility = 'hidden';
+
+        document.body.appendChild(div);
+        
+        let scrolWidth = div.offsetWidth - div.clientWidth;
+        console.log(`sw ${scrolWidth}`); 
+        div.remove();
+
+        return scrolWidth;
+    }
 
     function showModalByTime(selector, time) {
         setTimeout(() => {
