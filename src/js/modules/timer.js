@@ -27,6 +27,7 @@ const timer = (id, deadLine) => {
         const seconds = timer.querySelector('#seconds');
 
         const timeInterval = setInterval(updateClock, 1000);
+        
         updateClock();
         
         function updateClock(){
